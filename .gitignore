@@ -6,3 +6,5 @@ __pycache__/
 .DS_Store
 .env
 retinal_disease_model.h5
+*.h5
+*.pkl

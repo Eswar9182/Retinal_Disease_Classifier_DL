@@ -2,12 +2,24 @@ from flask import Flask, request, jsonify
 import cv2
 import numpy as np
 import os
+import gdown
 from tensorflow.keras.models import load_model
+from flask import Flask  # You forgot to import Flask here
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
-# Load model
-model = load_model('retinal_disease_model.h5')
+# Step 1: Define model path and URL
+model_path = 'retinal_disease_model.h5'
+model_url = 'https://drive.google.com/uc?id=1dSGNTBLv2aIw3BZIzF8mdELckGBzRSAv'
+
+# Step 2: Download model if not already present
+if not os.path.exists(model_path):
+    print("Model file not found. Downloading...")
+    gdown.download(model_url, model_path, quiet=False)
+
+# Step 3: Load the model after it's downloaded
+model = load_model(model_path)
 
 # Class labels
 class_labels = [
